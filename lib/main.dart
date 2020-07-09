@@ -29,19 +29,44 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-   String broker           = 'broker.mqttdashboard.com';
+
+  final builder = mqtt.MqttClientPayloadBuilder();
+
+  String broker           = 'broker.mqttdashboard.com';
   int port                = 1883;
   String username         = '';
   String passwd           = '';
-
+  double _temp            = 20;
+  
+  Timer _timer;
+  
   mqtt.MqttClient client;
   mqtt.MqttConnectionState connectionState;
 
-  double _temp = 20;
-
   StreamSubscription subscription;
 
+  void startTimer() {
+    const oneSec = const Duration(seconds: 10);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+           /* _getLocation().then((value) {
+                      setState(() {
+                        userLocation = value;
+                      });
+            });*/
+          builder.clear();
+          builder.addString("val");
+          print('EXAMPLE:: <<<< PUBLISH 1 >>>>');
+          client.publishMessage("temp/t3", mqtt.MqttQos.exactlyOnce , builder.payload);
+          print("data");
+        },
+      ),
+    );
+  }
 
+  
   void _connect() async {
     
     startServiceInPlatform();
@@ -66,7 +91,8 @@ class _MyHomePageState extends State<MyHomePage> {
     print('[MQTT client] MQTT client connecting....');
     client.connectionMessage = connMess;
 
-  
+    startTimer();
+
     try {
       await client.connect(username, passwd);
     } catch (e) {
@@ -119,11 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final String message =
     mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
-    /// The above may seem a little convoluted for users only interested in the
-    /// payload, some users however may be interested in the received publish message,
-    /// lets not constrain ourselves yet until the package has been in the wild
-    /// for a while.
-    /// The payload is a byte buffer, this will be specific to the topic
+ 
     print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
         'payload is <-- ${message} -->');
     print(client.connectionState);

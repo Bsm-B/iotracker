@@ -1,4 +1,4 @@
-#Wed Jul 01 12:55:08 CEST 2020
-base.0=/home/bsm/Desktop/background_service-master/background_service/build/app/intermediates/transforms/dexMerger/debug/0
+#Thu Jul 09 21:24:06 CEST 2020
+base.0=/home/bsm/Desktop/iotracker/build/app/intermediates/transforms/dexMerger/debug/0
 renamed.0=classes.dex
 path.0=classes.dex
