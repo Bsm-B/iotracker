@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/drawable-xhdpi-v4/notification_bg_normal.9.png",
+        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/drawable-xhdpi-v4/notification_bg_normal.9.png"
+    },
+    {
+        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png",
+        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/drawable-xhdpi-v4/notification_bg_normal_pressed.9.png"
+    },
+    {
+        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/drawable-xhdpi-v4/notification_bg_low_normal.9.png",
+        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/drawable-xhdpi-v4/notification_bg_low_normal.9.png"
+    },
+    {
+        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/drawable-xhdpi-v4/notification_bg_low_pressed.9.png",
+        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/drawable-xhdpi-v4/notification_bg_low_pressed.9.png"
+    },
+    {
+        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png",
+        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/drawable-xhdpi-v4/notify_panel_notification_icon_bg.png"
+    }
+]

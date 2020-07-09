@@ -1,0 +1,6 @@
+# Referenced at /home/bsm/Desktop/background_service-master/background_service/build/app/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:32
+-keep class com.retroportalstudio.www.background_service.MainActivity { <init>(...); }
+# Referenced at /home/bsm/Desktop/background_service-master/background_service/build/app/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:22
+-keep class com.retroportalstudio.www.background_service.MyApplication { <init>(...); }
+# Referenced at /home/bsm/Desktop/background_service-master/background_service/build/app/intermediates/merged_manifests/release/processReleaseManifest/merged/AndroidManifest.xml:27
+-keep class com.retroportalstudio.www.background_service.MyService { <init>(...); }
