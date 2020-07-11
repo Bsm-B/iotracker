@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:location/location.dart';
 import 'package:mqtt_client/mqtt_client.dart' as mqtt;
 import 'package:vibration/vibration.dart';
 import 'dart:math';
@@ -38,12 +39,47 @@ class _MyHomePageState extends State<MyHomePage> {
   String passwd           = '';
   double _temp            = 20;
   
+  LocationData userLocation;
   Timer _timer;
+  
+
+  Location location = new Location();
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
   
   mqtt.MqttClient client;
   mqtt.MqttConnectionState connectionState;
 
   StreamSubscription subscription;
+
+    Future<LocationData> _getLocation() async{
+
+          _serviceEnabled = await location.serviceEnabled();
+      if (!_serviceEnabled) {
+        _serviceEnabled = await location.requestService();
+        if (!_serviceEnabled) {
+          return null;
+        }
+      }
+
+      _permissionGranted = await location.hasPermission();
+      if (_permissionGranted == PermissionStatus.denied) {
+        _permissionGranted = await location.requestPermission();
+        if (_permissionGranted != PermissionStatus.granted) {
+          return null;
+        }
+      }
+
+      return  _locationData = await location.getLocation();
+   
+
+
+
+
+
+    }
+
 
   void startTimer() {
     const oneSec = const Duration(seconds: 10);
@@ -51,16 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
       oneSec,
       (Timer timer) => setState(
         () {
-           /* _getLocation().then((value) {
+            _getLocation().then((value) {
                       setState(() {
                         userLocation = value;
                       });
-            });*/
+            });
           builder.clear();
-          builder.addString("val");
-          print('EXAMPLE:: <<<< PUBLISH 1 >>>>');
+          builder.addString(userLocation.latitude.toString() + "," + userLocation.longitude.toString());
           client.publishMessage("temp/t3", mqtt.MqttQos.exactlyOnce , builder.payload);
-          print("data");
         },
       ),
     );
