@@ -33,22 +33,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final builder = mqtt.MqttClientPayloadBuilder();
 
-  String broker           = 'broker.mqttdashboard.com';
-  int port                = 1883;
-  String username         = '';
-  String passwd           = '';
-  double _temp            = 20;
-  
-  LocationData userLocation;
-  Timer _timer;
-  
+  String        broker           = 'broker.mqttdashboard.com';
+  int           port                = 1883;
+  String        username         = '';
+  String        passwd           = '';
+  double        _temp            = 20;
 
-  Location location = new Location();
-  bool _serviceEnabled;
-  PermissionStatus _permissionGranted;
-  LocationData _locationData;
+  LocationData  userLocation;
+  Timer         _timer;
+  LocationData  _locationData;
+
+  Location      location        = new Location();
+  bool          _serviceEnabled;
   
-  mqtt.MqttClient client;
+  
+  PermissionStatus _permissionGranted;
+  
+  mqtt.MqttClient  client;
   mqtt.MqttConnectionState connectionState;
 
   StreamSubscription subscription;
