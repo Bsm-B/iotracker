@@ -8,6 +8,10 @@ import 'package:vibration/vibration.dart';
 import 'dart:math';
 import 'dart:async';
 
+import 'package:flutter_blue/flutter_blue.dart';
+
+FlutterBlue flutterBlue = FlutterBlue.instance;
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -29,58 +33,70 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-
   final builder = mqtt.MqttClientPayloadBuilder();
 
-  String        broker           = 'broker.mqttdashboard.com';
-  int           port                = 1883;
-  String        username         = '';
-  String        passwd           = '';
-  double        _temp            = 20;
+  String broker = 'broker.mqttdashboard.com';
+  int port = 1883;
+  String username = '';
+  String passwd = '';
+  double _temp = 20;
 
-  LocationData  userLocation;
-  Timer         _timer;
-  LocationData  _locationData;
+  LocationData userLocation;
+  Timer _timer;
+  LocationData _locationData;
 
-  Location      location        = new Location();
-  bool          _serviceEnabled;
-  
-  
+  Location location = new Location();
+  bool _serviceEnabled;
+
   PermissionStatus _permissionGranted;
-  
-  mqtt.MqttClient  client;
+
+  mqtt.MqttClient client;
   mqtt.MqttConnectionState connectionState;
 
   StreamSubscription subscription;
 
-    Future<LocationData> _getLocation() async{
+  FlutterBlue flutterBlue = FlutterBlue.instance;
 
-          _serviceEnabled = await location.serviceEnabled();
+  final List<BluetoothDevice> devicesList = new List<BluetoothDevice>();
+
+  BluetoothDevice _SmartBand;
+
+  List<BluetoothService> _services;
+
+
+  _addDeviceTolist(final BluetoothDevice device) {
+    if (!devicesList.contains(device)) {
+      setState(() {
+        devicesList.add(device);
+        print('${device.name} found! ${device.type} ||  ${device.id}  ');
+        if (device.id.toString() == "E9:9C:17:C4:8C:00") { // target
+          
+        _SmartBand  = device;
+           print("detect !!!!!!!!!");
+        } 
+      });
+    }
+  }
+
+  Future<LocationData> _getLocation() async {
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled =  await location.requestService();
       if (!_serviceEnabled) {
-        _serviceEnabled = await location.requestService();
-        if (!_serviceEnabled) {
-          return null;
-        }
+        return null;
       }
-
-      _permissionGranted = await location.hasPermission();
-      if (_permissionGranted == PermissionStatus.denied) {
-        _permissionGranted = await location.requestPermission();
-        if (_permissionGranted != PermissionStatus.granted) {
-          return null;
-        }
-      }
-
-      return  _locationData = await location.getLocation();
-   
-
-
-
-
-
     }
 
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        return null;
+      }
+    }
+
+    return _locationData = await location.getLocation();
+  }
 
   void startTimer() {
     const oneSec = const Duration(seconds: 10);
@@ -88,22 +104,62 @@ class _MyHomePageState extends State<MyHomePage> {
       oneSec,
       (Timer timer) => setState(
         () {
-            _getLocation().then((value) {
-                      setState(() {
-                        userLocation = value;
-                      });
+          _getLocation().then((value) {
+            setState(() {
+              userLocation = value;
             });
+          });
           builder.clear();
-          builder.addString(userLocation.latitude.toString() + "," + userLocation.longitude.toString());
-          client.publishMessage("temp/t3", mqtt.MqttQos.exactlyOnce , builder.payload);
+          builder.addString(userLocation.latitude.toString() +
+              "," +
+              userLocation.longitude.toString());
+          client.publishMessage(
+              "temp/t3", mqtt.MqttQos.exactlyOnce, builder.payload);
         },
       ),
     );
   }
 
-  
+  void bleConnect() async {
+    flutterBlue.connectedDevices
+        .asStream()
+        .listen((List<BluetoothDevice> devices) {
+      for (BluetoothDevice device in devices) {
+        _addDeviceTolist(device);
+      }
+    });
+    flutterBlue.scanResults.listen((List<ScanResult> results) {
+      for (ScanResult result in results) {
+        _addDeviceTolist(result.device);
+      }
+    });
+    flutterBlue.startScan();
+  }
+
+  void connectDevice() async {
+    if (_SmartBand != null) {
+      _timer = new Timer.periodic(
+          Duration(seconds: 5),
+          (Timer timer) => setState(() {
+                print("Not Found Band");
+                bleConnect();
+              }));
+    } else {
+      flutterBlue.stopScan();
+      try {
+              await _SmartBand.connect();
+              print("connected bluetooth");
+            } catch (e) {
+              if (e.code != 'already_connected') {
+                throw e;
+              }
+            } finally {
+              _services = await _SmartBand.discoverServices();
+            }
+    }
+  }
+
   void _connect() async {
-    
     startServiceInPlatform();
     client = mqtt.MqttClient(broker, '');
     client.port = port;
@@ -116,17 +172,31 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Random random = new Random();
 
-   String clientIdentifier = 'android-'+ random.toString()+'0kl68';
+    String clientIdentifier = 'android-' + random.toString() + '0kl68';
 
     final mqtt.MqttConnectMessage connMess = mqtt.MqttConnectMessage()
         .withClientIdentifier(clientIdentifier)
         .startClean() // Non persistent session for testing
-        .keepAliveFor(30)
+        .keepAliveFor(3600)
         .withWillQos(mqtt.MqttQos.atMostOnce);
     print('[MQTT client] MQTT client connecting....');
     client.connectionMessage = connMess;
 
-    startTimer();
+/*
+    for (;;) {
+      
+    }
+ */
+    bleConnect();
+    connectDevice();
+
+    // Reads all characteristics
+    var characteristics = _services[0].characteristics;
+    for(BluetoothCharacteristic c in characteristics) {
+    List<int> value = await c.read();
+    print(value);
+    }
+   // startTimer();
 
     try {
       await client.connect(username, passwd);
@@ -141,7 +211,6 @@ class _MyHomePageState extends State<MyHomePage> {
       setState(() {
         connectionState = client.connectionState;
       });
-    
     } else {
       print('[MQTT client] ERROR: MQTT client connection failed - '
           'disconnecting, state is ${client.connectionState}');
@@ -176,11 +245,10 @@ class _MyHomePageState extends State<MyHomePage> {
   void _onMessage(List<mqtt.MqttReceivedMessage> event) {
     print(event.length);
     final mqtt.MqttPublishMessage recMess =
-    event[0].payload as mqtt.MqttPublishMessage;
+        event[0].payload as mqtt.MqttPublishMessage;
     final String message =
-    mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+        mqtt.MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
- 
     print('[MQTT client] MQTT message: topic is <${event[0].topic}>, '
         'payload is <-- ${message} -->');
     print(client.connectionState);
@@ -188,38 +256,33 @@ class _MyHomePageState extends State<MyHomePage> {
     print("[MQTT client] message with message: ${message}");
     setState(() {
       _temp = double.parse(message);
-      
-      if (_temp == 10){
-        Vibration.vibrate(pattern: [100, 500]); //A 
 
-      }else if( _temp == 20){
+      if (_temp == 10) {
+        Vibration.vibrate(pattern: [100, 500]); //A
+
+      } else if (_temp == 20) {
         Vibration.vibrate(pattern: [100, 500, 100, 800]); //B
 
-      }else if(_temp == 30){
+      } else if (_temp == 30) {
         Vibration.vibrate(pattern: [100, 500, 100, 500, 100, 800]); //C
 
-      }else if(_temp == 40){
-        Vibration.vibrate(pattern: [100, 500, 50,500, 50, 500,50, 800]);
-
-      }else if(_temp == 50){
+      } else if (_temp == 40) {
+        Vibration.vibrate(pattern: [100, 500, 50, 500, 50, 500, 50, 800]);
+      } else if (_temp == 50) {
         Vibration.vibrate(duration: 1500, amplitude: 20);
-
       }
-
-
     });
   }
 
   void _subscribeToTopic(String topic) {
     if (connectionState == mqtt.MqttConnectionState.connected) {
-        print('[MQTT client] Subscribing to ${topic.trim()}');
-        client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
+      print('[MQTT client] Subscribing to ${topic.trim()}');
+      client.subscribe(topic, mqtt.MqttQos.exactlyOnce);
     }
   }
 
   void startServiceInPlatform() async {
-
-    if(Platform.isAndroid){
+    if (Platform.isAndroid) {
       var methodChannel = MethodChannel("com.retroportalstudio.messages");
       String data = await methodChannel.invokeMethod("startService");
       debugPrint(data);
@@ -239,14 +302,10 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Center(
         child: RaisedButton(
             child: Text("Start Background"),
-            onPressed: (){
-                  startServiceInPlatform();
-            }
-
-        ),
+            onPressed: () {
+              startServiceInPlatform();
+            }),
       ),
     );
   }
 }
-
-

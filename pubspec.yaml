@@ -22,6 +22,8 @@ dependencies:
   mqtt_client: ^5.5.3
   vibration: ^1.4.0
   location: ^3.0.2
+  flutter_blue: ^0.7.2
+
 
 
 

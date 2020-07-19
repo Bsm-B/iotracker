@@ -1,4 +1,4 @@
-#Wed Jul 01 12:49:45 CEST 2020
-base.0=/home/bsm/Desktop/background_service-master/background_service/build/app/intermediates/transforms/r8/release/1
+#Sat Jul 11 20:25:55 CEST 2020
+base.0=/home/bsm/Desktop/iotracker/build/app/intermediates/transforms/r8/release/0/classes.dex
 renamed.0=classes.dex
 path.0=classes.dex

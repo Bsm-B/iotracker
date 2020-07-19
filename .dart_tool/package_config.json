@@ -62,10 +62,22 @@
       "languageVersion": "2.2"
     },
     {
+      "name": "fixnum",
+      "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/fixnum-0.10.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.1"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/packages/flutter",
       "packageUri": "lib/",
       "languageVersion": "2.2"
+    },
+    {
+      "name": "flutter_blue",
+      "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/flutter_blue-0.7.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
     },
     {
       "name": "flutter_test",
@@ -140,6 +152,18 @@
       "languageVersion": "2.1"
     },
     {
+      "name": "protobuf",
+      "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/protobuf-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.0"
+    },
+    {
+      "name": "rxdart",
+      "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/.pub-cache/hosted/pub.dartlang.org/rxdart-0.24.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.6"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///home/bsm/Desktop/Desktop/Flutter/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -206,7 +230,7 @@
       "languageVersion": "2.1"
     }
   ],
-  "generated": "2020-07-09T18:35:49.767269Z",
+  "generated": "2020-07-11T18:23:20.432732Z",
   "generator": "pub",
   "generatorVersion": "2.9.0-3.0.dev.flutter-94178e920e"
 }

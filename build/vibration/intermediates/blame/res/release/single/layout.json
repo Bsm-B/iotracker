@@ -1,26 +1,26 @@
 [
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/notification_action_tombstone.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/notification_action_tombstone.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/custom_dialog.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/custom_dialog.xml"
     },
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/notification_action.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/notification_action.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/notification_template_part_chronometer.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/notification_template_part_chronometer.xml"
     },
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/notification_template_icon_group.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/notification_template_icon_group.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/notification_action_tombstone.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/notification_action_tombstone.xml"
     },
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/notification_template_part_chronometer.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/notification_template_part_chronometer.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/notification_action.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/notification_action.xml"
     },
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/custom_dialog.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/custom_dialog.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/notification_template_part_time.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/notification_template_part_time.xml"
     },
     {
-        "merged": "/home/bsm/Desktop/background_service-master/background_service/build/vibration/intermediates/res/merged/release/layout/notification_template_part_time.xml",
-        "source": "/home/bsm/.gradle/caches/transforms-1/files-1.1/core-1.1.0.aar/f3edaf53c6c3099f0d9af700afb4b264/res/layout/notification_template_part_time.xml"
+        "merged": "/home/bsm/Desktop/iotracker/build/vibration/intermediates/res/merged/release/layout/notification_template_icon_group.xml",
+        "source": "/home/bsm/.gradle/caches/transforms-2/files-2.1/a528b13ac93e64cafa3d0480e2c93207/core-1.1.0/res/layout/notification_template_icon_group.xml"
     }
 ]
